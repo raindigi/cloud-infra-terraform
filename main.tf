@@ -68,27 +68,13 @@ resource "aws_security_group" "http-ssh" {
   }
 }
 
-# TODO: this saves the private key in the state file, which is usually checked
-# in to version control. So this is not a solution.
-# Solution: have user supply the filename of an existing public key file (or
-# create a new local public/private key pair) and then use aws_key_pair with this.
-# For logging in to the instance, the user then uses the existing private key file on the local machine.
+data "local_file" "public_key" {
+  filename = pathexpand(var.public_key_file)
+}
 
-# Create RSA key pair
-resource "tls_private_key" "key" {
-  algorithm = "RSA"
-}
-# Import the public key into AWS as a key pair resource
-# Note: performs the 'ImportKeyPair' API operation and NOT 'CreateKeyPair'
 resource "aws_key_pair" "my-key-pair" {
-  #key_name   = "example-infra-terraform"
-  public_key = tls_private_key.key.public_key_openssh
-}
-# Save private key to a local file
-resource "local_file" "private_key_file" {
-  filename          = "example-infra-terraform.pem"
-  sensitive_content = tls_private_key.key.private_key_pem
-  file_permission   = "0400"
+  key_name_prefix = "example-infra-terraform-"
+  public_key      = data.local_file.public_key.content
 }
 
 data "aws_ami" "ubuntu" {
@@ -106,6 +92,6 @@ resource "aws_instance" "my-instance" {
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.my-subnet.id
   associate_public_ip_address = true
-  key_name                    = "example-infra-terraform"
+  key_name                    = aws_key_pair.my-key-pair.key_name
   vpc_security_group_ids      = [aws_security_group.base.id, aws_security_group.http-ssh.id]
 }
