@@ -2,36 +2,36 @@ provider "aws" {
   region = var.region
 }
 
-resource "aws_vpc" "my-vpc" {
+resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 }
 
-resource "aws_internet_gateway" "my-internet-gateway" {
-  vpc_id = aws_vpc.my-vpc.id
+resource "aws_internet_gateway" "main" {
+  vpc_id = aws_vpc.main.id
 }
 
-resource "aws_subnet" "my-subnet" {
-  vpc_id     = aws_vpc.my-vpc.id
+resource "aws_subnet" "main" {
+  vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.0.0/16"
 }
 
-resource "aws_route_table" "my-route-table" {
-  vpc_id = aws_vpc.my-vpc.id
+resource "aws_route_table" "main" {
+  vpc_id = aws_vpc.main.id
   route {
     cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.my-internet-gateway.id
+    gateway_id = aws_internet_gateway.main.id
   }
 }
 
-resource "aws_route_table_association" "my-route-table-association" {
-  route_table_id = aws_route_table.my-route-table.id
-  subnet_id      = aws_subnet.my-subnet.id
+resource "aws_route_table_association" "main" {
+  route_table_id = aws_route_table.main.id
+  subnet_id      = aws_subnet.main.id
 }
 
 resource "aws_security_group" "base" {
   name        = "base"
   description = "Allow all incoming traffic from same security group and all outgoing traffic"
-  vpc_id      = aws_vpc.my-vpc.id
+  vpc_id      = aws_vpc.main.id
   ingress {
     protocol    = -1
     from_port   = 0
@@ -51,7 +51,7 @@ resource "aws_security_group" "base" {
 resource "aws_security_group" "http-ssh" {
   name        = "http-ssh"
   description = "Allow incoming traffic to port 80 from everywhere and port 22 from a specific IP address"
-  vpc_id      = aws_vpc.my-vpc.id
+  vpc_id      = aws_vpc.main.id
   ingress {
     protocol    = "tcp"
     from_port   = 80
@@ -73,7 +73,7 @@ data "local_file" "public_key" {
 }
 
 # Performs 'ImportKeyPair' API operation (not 'CreateKeyPair')
-resource "aws_key_pair" "my-key-pair" {
+resource "aws_key_pair" "main" {
   key_name_prefix = "example-infra-terraform-"
   public_key      = data.local_file.public_key.content
 }
@@ -87,12 +87,12 @@ data "aws_ami" "ubuntu" {
   most_recent = true
 }
 
-resource "aws_instance" "my-instance" {
+resource "aws_instance" "instances" {
   count                       = 3
   ami                         = data.aws_ami.ubuntu.image_id
   instance_type               = "t2.micro"
-  subnet_id                   = aws_subnet.my-subnet.id
+  subnet_id                   = aws_subnet.main.id
   associate_public_ip_address = true
-  key_name                    = aws_key_pair.my-key-pair.key_name
+  key_name                    = aws_key_pair.main.key_name
   vpc_security_group_ids      = [aws_security_group.base.id, aws_security_group.http-ssh.id]
 }
