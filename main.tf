@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-central-1"
+  region = var.region
 }
 
 resource "aws_vpc" "my-vpc" {
@@ -72,6 +72,7 @@ data "local_file" "public_key" {
   filename = pathexpand(var.public_key_file)
 }
 
+# Performs 'ImportKeyPair' API operation (not 'CreateKeyPair')
 resource "aws_key_pair" "my-key-pair" {
   key_name_prefix = "example-infra-terraform-"
   public_key      = data.local_file.public_key.content
