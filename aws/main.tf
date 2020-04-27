@@ -1,4 +1,5 @@
 provider "aws" {
+  # Credentials are read from ~/.aws/credentials
   region = var.region
 }
 
