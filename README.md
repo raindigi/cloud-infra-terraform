@@ -6,8 +6,8 @@ This repo shows how to create an example cloud infrastructure on the major cloud
 
 ## Contents
 
-- **[Amazon Web Services (AWS)](aws):** using the [`aws`](https://www.terraform.io/docs/providers/aws/index.html) Terraform provider to create AWS infrastructure
-- **[Google Cloud Platform (GCP)](gcp):** using the [`google`](https://www.terraform.io/docs/providers/google/index.html) Terraform provider to create GCP infrastructure
+- **[Amazon Web Services (AWS)](aws):** creating AWS infrastructure with the [`aws`](https://www.terraform.io/docs/providers/aws/index.html) Terraform provider
+- **[Google Cloud Platform (GCP)](gcp):** creating GCP infrastructure with the [`google`](https://www.terraform.io/docs/providers/google/index.html) Terraform provider
 
 ## Infrastructure
 
