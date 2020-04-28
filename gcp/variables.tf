@@ -1,11 +1,16 @@
 variable "project" {
   type        = string
-  description = "Project ID of the GCP project to use (find out with 'gcloud projects list')."
+  description = "GCP project ID in which to create the resources (list projects with 'gcloud projects list')."
+}
+
+variable "localhost_ip" {
+  type        = string
+  description = "Public IP address of the local machine (this IP address will get SSH access to the instances)."
 }
 
 variable "service_account_key_file" {
   type        = string
-  description = "Service account key file for the service account that Terraform will use to access GCP."
+  description = "Service account key file of the GCP service account that Terraform will use to access GCP."
   default     = "key.json"
 }
 
