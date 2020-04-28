@@ -33,13 +33,13 @@ gcloud iam service-accounts keys create key.json --iam-account "$service_account
 
 The above command creates a file named `key.json` and saves it in your current working directory.
 
-> Please make sure that the `key.json` file is located in the `gcp/` directory.
+> Note that this file is referenced by the `service_account_key_file` variable in [`variables.tf`](variables.tf).
 
 ## Usage
 
 ### Define variables
 
-You can see all the variables of the Terraform configuration in `variables.tf`.
+> You can see all the variables exposed by the Terraform configuration in [`variables.tf`](variables.tf).
 
 Create a `terraform.tfvars` file that assigns values to at least the required variables (those with no default value):
 
@@ -97,4 +97,4 @@ ssh -i ~/.ssh/google_compute_engine <PUBLIC-IP>
 
 Where `<PUBLIC-IP>` is the public IP address of the instance as shown by `terraform output`.
 
-> Note that, by design, SSH connections are only allowed from the IP address that you assigned to the `localhost_ip` variable, that is, for your local machine.
+> Note that, by design, SSH connections are only allowed from the IP address that you assigned to the `localhost_ip` variable, that is, from your local machine.

@@ -1,4 +1,5 @@
 *.tfstate*
 .terraform
 *.tfvars
+aws/key*
 gcp/key.json
