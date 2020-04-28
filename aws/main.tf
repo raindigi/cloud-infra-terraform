@@ -40,6 +40,7 @@ resource "aws_security_group" "base" {
     self        = true
     description = "Allow all incoming traffic from same security group"
   }
+  # The AWS provider removes the default egress rule, so it has to be redefined
   egress {
     protocol    = -1
     from_port   = 0

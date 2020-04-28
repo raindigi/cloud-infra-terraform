@@ -19,7 +19,7 @@ This creates two files named `key` and `key.pub` in your current working directo
 
 The public key has to be passed to a variable of the Terraform configuration (see below), and the private key can be used to connect to the instances with SSH after they have been created.
 
-Instead of creating a new key-pair, you can also use an existing key pair on your machine, such as, the default `~/.ssh/id_rsa` (private key) and `~/.ssh/id_rsa.pub` (public key).
+Instead of creating a new key-pair, you can also use an existing key pair on your machine, such as the default `~/.ssh/id_rsa` (private key) and `~/.ssh/id_rsa.pub` (public key).
 
 ## Usage
 
