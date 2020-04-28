@@ -18,7 +18,7 @@ The cloud infrastructure consists of the following generic components:
 - Firewall rules that allow the following types of traffic:
     - All incoming traffic from other instances of the example infrastructure
     - Incoming HTTP traffic from everywhere
-    - Incmoing SSH traffic from your local machine
+    - Incoming SSH traffic from your local machine
     - All outgoing traffic to everywhere
 - 3 compute instances running Ubuntu 18.04
 

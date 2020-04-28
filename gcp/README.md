@@ -33,27 +33,25 @@ gcloud iam service-accounts keys create key.json --iam-account "$service_account
 
 The above command creates a file named `key.json` and saves it in your current working directory.
 
-> Note that this file is referenced by the `service_account_key_file` variable in [`variables.tf`](variables.tf).
-
 ## Usage
 
 ### Define variables
 
 > You can see all the variables exposed by the Terraform configuration in [`variables.tf`](variables.tf).
 
-Create a `terraform.tfvars` file that assigns values to at least the required variables (those with no default value):
+Create a `terraform.tfvars` file that defines values for at least the required variables (those without a default value):
 
 ```
 project = "<GCP-PROJECT-ID>"
 localhost_ip = "<IP>"
 ```
 
-Please replace `<GCP-PROJECT-ID>` with the ID of your current GCP project and `<IP>` with the public IP address of your local machine. You can find out these values as follows:
+Where:
 
-- GCP project ID: `gcloud config get-value project`
-- Local machine IP address: `curl -s checkip.amazonaws.com`
+- `<GCP-PROJECT-ID>` is the project ID of your current GCP project, which you can find out with `gcloud config get-value project`
+- `<LOCALHOST-IP>` is the public IP address of your local machine, which you can find it out with `curl -s checkip.amazonaws.com`
 
-You can also set any of the optional variables (those with a default value) in the `terraform.tfvars` file.
+You can also define values for any of the optional variables (those with a default value) in the `terraform.tfvars` file.
 
 ### Create the infrastructure
 
@@ -77,11 +75,11 @@ The Terraform configuration creates (and deletes) the following GCP resources:
 
 ## Accessing the infrastructure
 
-When the `terraform apply` command completes, it shows an output that lists the names, private IP addresses, and public IP addresses of the created instances.
+At the end of the execution, the `terraform apply` command outputs the names, private IP addresses, and public IP addresses of the created instances.
 
 > You can display this output at any time with `terraform output`.
 
-You can connect to any of the instances with:
+You can connect to any of these instances with:
 
 ```bash
 gcloud compute ssh <NAME>
@@ -89,7 +87,13 @@ gcloud compute ssh <NAME>
 
 Where `<NAME>` is the name of the instance as shown by `terraform output`.
 
-You can also connect to the instances with your native SSH client with:
+You can also connect as root with:
+
+```bash
+gcloud compute ssh root@<NAME>
+```
+
+And you can also use the native SSH client with:
 
 ```bash
 ssh -i ~/.ssh/google_compute_engine <PUBLIC-IP>

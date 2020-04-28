@@ -31,13 +31,13 @@ Create a `terraform.tfvars` file that defines values for at least the required v
 
 ```
 public_key_file = "<PUBLIC-KEY-FILE>"
-localhost_ip = "<IP>"
+localhost_ip = "<LOCALHOST-IP>"
 ```
 
 Where:
 
-- `<PUBLIC-KEY-FILE>` is the name of your public key file (e.g. `key.pub`).
-- `<IP>` is the public IP address of your local machine. You can find it out with `curl -s checkip.amazonaws.com`.
+- `<PUBLIC-KEY-FILE>` is the name of your public key file (e.g. `key.pub`)
+- `<LOCALHOST-IP>` is the public IP address of your local machine, which you can find it out with `curl -s checkip.amazonaws.com`
 
 You can also define values for any of the optional variables (those with a default value) in the `terraform.tfvars` file.
 
@@ -80,5 +80,11 @@ Where:
 
 - `<PRIVATE-KEY-FILE>` is the name of your private key file (e.g. `key`)
 - `<PUBLIC-IP>` is the public IP address of the instance as shown by `terraform output`
+
+For example:
+
+```bash
+ssh -i key ubuntu@52.59.219.106
+```
 
 > Note that, by design, SSH connections are only allowed from the IP address that you assigned to the `localhost_ip` variable, that is, from your local machine.
