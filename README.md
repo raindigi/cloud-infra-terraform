@@ -1,4 +1,4 @@
-# Cloud infrastructure — Terraform
+# Example cloud infrastructure — Terraform
 
 This repo shows how to create an example cloud infrastructure on the major cloud providers with Terraform.
 
