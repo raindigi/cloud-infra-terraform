@@ -2,7 +2,7 @@
 
 This repo shows how to create an example cloud infrastructure on the major cloud providers with Terraform.
 
-> _See also [cloud-infra-cli](https://github.com/weibeld/cloud-infra-terraform) for creating the same cloud infrastructure with the official cloud providers CLI clients._
+> _See also [cloud-infra-cli](https://github.com/weibeld/cloud-infra-cli) for creating the same cloud infrastructure with the official cloud providers CLI clients._
 
 ## Contents
 
